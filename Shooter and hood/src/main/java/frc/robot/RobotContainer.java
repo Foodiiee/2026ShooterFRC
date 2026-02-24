@@ -32,29 +32,47 @@ public class RobotContainer {
     SmartDashboard.putNumber("flywheelSpeed", 0);
     SmartDashboard.putNumber("hood target position", 0);
 
-    SmartDashboard.putNumber("hood kV", 0.1);
-    SmartDashboard.putNumber("hood kP", 0.4);
-    SmartDashboard.putNumber("hood kI", 0.0);
-    SmartDashboard.putNumber("hood kD", 0.0);
-
     SmartDashboard.putNumber("kV", 0.1);
     SmartDashboard.putNumber("kP", 0.4);
     SmartDashboard.putNumber("kI", 0.0);
     SmartDashboard.putNumber("kD", 0.0);
+
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
+    // CHANGE THIS THING TO ACTUAL HAS TARGET ONCE ERIC CODE IS DONE AND MERGED
     hasTarget = new Trigger(hoodSwitch::get);
     configureBindings();
   }
 
   private void configureBindings() {
+    // Spin flywheel
     operatorController.a().onTrue(new ShooterCommand(shooterSubsystem, 20));
 
+    // Manual hood override
     operatorController.povUp().onTrue(new HoodCommand(hoodSubsystem, true, 0.1));
     operatorController.povUp().onFalse(new HoodCommand(hoodSubsystem, true, 0));
     operatorController.povDown().onTrue(new HoodCommand(hoodSubsystem, true, -0.1));
     operatorController.povDown().onFalse(new HoodCommand(hoodSubsystem, true, 0));
+
+    // Auto hood movement
     hasTarget.onFalse(new HoodCommand(hoodSubsystem, false, 0));
 
+    // Regular Shooting
     driveController.x().onTrue(new IndexAndSpindexCommand(InSSubsystem, shooterSubsystem, false));
+
+    // Force Shoot
     operatorController.b().onTrue(new IndexAndSpindexCommand(InSSubsystem, shooterSubsystem, true));
   }
 
