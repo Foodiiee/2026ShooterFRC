@@ -2,18 +2,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.HoodSubsystem;
+import frc.robot.subsystems.TurretVision;
 
 public class HoodCommand extends Command{
     public HoodSubsystem hoodSubsystem;
+    public TurretVision turretVision = new TurretVision();
     public boolean HoodOverride;
-    public double targetHoodPos;
+    public double hoodSpeed;
     
-    public HoodCommand(HoodSubsystem hoodSubsystem, boolean HoodOverride, double targetHoodPos){
+    public HoodCommand(HoodSubsystem hoodSubsystem, boolean HoodOverride, double hoodSpeed){
         this.hoodSubsystem = hoodSubsystem;
         this.HoodOverride = HoodOverride;
-        this.targetHoodPos = targetHoodPos;
+        this.hoodSpeed = hoodSpeed;
         addRequirements(hoodSubsystem);
     }
 
@@ -25,10 +26,11 @@ public class HoodCommand extends Command{
     @Override
     public void execute() {
         if (HoodOverride) {
-            hoodSubsystem.forceHoodMove(targetHoodPos);
+            hoodSubsystem.forceHoodMove(hoodSpeed);
         }
         else {
-            hoodSubsystem.moveHood(SmartDashboard.getNumber("hood target position", 0));
+            //hoodSubsystem.moveHood(turretVision.getTurretDistance());
+            hoodSubsystem.moveHood();
         }
     }
 
@@ -39,9 +41,6 @@ public class HoodCommand extends Command{
 
     @Override
     public boolean isFinished() {
-        if (RobotContainer.hasTarget.getAsBoolean() == true && HoodOverride == false) {
-            return true;
-        }
         return false;
     }
 }

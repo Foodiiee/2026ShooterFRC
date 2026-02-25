@@ -4,17 +4,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.IndexAndSpindexSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.FlywheelSubsystem;
+import frc.robot.subsystems.HoodSubsystem;
 
 public class IndexAndSpindexCommand extends Command{
     public IndexAndSpindexSubsystem InSSubsystem;
-    public ShooterSubsystem shooterSubsystem;
+    public FlywheelSubsystem flywheelSubsystem = new FlywheelSubsystem();
+    public HoodSubsystem hoodSubsystem = new HoodSubsystem();
     public boolean IndexOverride = false;
     public boolean ForceSpin = false;
     
-    public IndexAndSpindexCommand(IndexAndSpindexSubsystem InSSubsystem, ShooterSubsystem shooterSubsystem, boolean ForceSpin){
+    public IndexAndSpindexCommand(IndexAndSpindexSubsystem InSSubsystem, boolean ForceSpin){
         this.InSSubsystem = InSSubsystem;
-        this.shooterSubsystem = shooterSubsystem;
         this.ForceSpin = ForceSpin;
         addRequirements(InSSubsystem);
     }
@@ -26,17 +27,11 @@ public class IndexAndSpindexCommand extends Command{
     @Override
     public void execute() {
         if (ForceSpin == false) {
-            if (shooterSubsystem.getShooterState() != "cantShoot" ) {
-                IndexOverride = false;
+            if (flywheelSubsystem.getShooterState() == "cantShoot") {
+                flywheelSubsystem.spinShooter(SmartDashboard.getNumber("flywheelSpeed", 0));
+                hoodSubsystem.moveHood();
             }
-            else {
-                IndexOverride = true;
-            }
-            if (IndexOverride == true) {
-                shooterSubsystem.spinShooter(SmartDashboard.getNumber("flywheelSpeed", 0));
-                IndexOverride = false;
-            }
-            else if (IndexOverride == false) {
+            else if (flywheelSubsystem.getShooterState() == "readyToShoot") {
                 InSSubsystem.moveFeeder();
             }
         }

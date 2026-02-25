@@ -2,13 +2,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.FlywheelSubsystem;
 
-public class ShooterCommand extends Command{
-    public ShooterSubsystem shooterSubsystem;
+public class FlywheelCommand extends Command{
+    public FlywheelSubsystem shooterSubsystem;
     public double targetRPS;
 
-    public ShooterCommand(ShooterSubsystem shooterSubsystem, double targetRPS){
+    public FlywheelCommand(FlywheelSubsystem shooterSubsystem, double targetRPS){
         this.shooterSubsystem = shooterSubsystem;
         this.targetRPS = targetRPS;
         addRequirements(shooterSubsystem);

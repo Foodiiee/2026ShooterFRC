@@ -11,7 +11,7 @@ import frc.robot.RobotContainer;
 public class IndexAndSpindexSubsystem extends SubsystemBase{
     public SparkMax indexMotor;
     public SparkMax spindexMotor;
-    public ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+    public FlywheelSubsystem shooterSubsystem = new FlywheelSubsystem();
     public HoodSubsystem hoodSubsystem = new HoodSubsystem();
 
     public IndexAndSpindexSubsystem(){
@@ -32,8 +32,7 @@ public class IndexAndSpindexSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
         if (hoodSubsystem.getHoodState() == "readyToShoot" 
-        && shooterSubsystem.getShooterState() == "readyToShoot" 
-        && RobotContainer.hasTarget.getAsBoolean() == false) {
+        && shooterSubsystem.getShooterState() == "readyToShoot") {
             RobotContainer.driveController.setRumble(GenericHID.RumbleType.kBothRumble, 100);
         }
         else {
